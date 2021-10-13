@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title1 %}
+
+<title>User Authentication</title>
+
+{% endblock title1 %}
+
+{% block content1 %}
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+
+    <h2 class="active"> User Authentication </h2>
+    <div class="fadeIn first">
+      <img src="{% static 'assets/login.png' %}" id="icon" alt="User Icon" />
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" id="D_Auth" class="fadeIn second" name="D_Auth" placeholder="Authentication Key">
+      <a class="underlineHover fadeIn second" href="{% url 'authhelp' %}">How to find Authentication Key</a>
+      <input type="text" id="D_ChID" class="fadeIn third" name="D_ChID" placeholder="Channel ID">
+      <a class="underlineHover fadeIn third" href="{% url 'authhelp' %}">How to find Authentication Key</a>
+      <select type="text" name="U_Type" id="U_Type" class="fadeIn third">
+        <option type="text" value="Normal">Normal Player</option>
+        <option type="text" value="Patron">Patron Player</option>
+      </select>
+      <select type="text" name="N_Loss" id="N_Loss" class="fadeIn third">
+        <option type="text" value="Noloss">No Loss</option>
+        <option type="text" value="Normal">Normal</option>
+      </select>
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+
+  </div>
+</div>
+
+{% endblock content1 %}

@@ -1,0 +1,30 @@
+{% extends 'registration/register.html' %}
+{% load static %}
+{% block title1 %}
+
+<title>Change Password</title>
+
+{% endblock title1 %}
+
+{% block content1 %}
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+
+    <h2 class="active"> Change Password </h2>
+    <div class="fadeIn first">
+      <img src="{% static 'assets/login.png' %}" id="icon" alt="User Icon" />
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" id="new_password" class="fadeIn second" name="new_password" placeholder="New Password">
+      <input type="text" id="confirm_password" class="fadeIn second" name="confirm_password" placeholder="Confirm Password">
+      <input type="hidden" id="username" name="username" value="{{username}}">
+      <input type="submit" class="fadeIn fourth" value="Update">
+    </form>
+
+  </div>
+</div>
+
+{% endblock content1 %}

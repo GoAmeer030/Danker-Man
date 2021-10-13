@@ -1,0 +1,58 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block title1 %}
+
+<title>Help</title>
+
+{% endblock title1 %}
+
+{% block content1 %}
+
+<div class="big-para">
+
+    <h1><strong>Authentication Key</strong></h1>
+
+    <h2>What is authentication key?</h2>
+    <p>&nbsp;Authentication key is a key which is a combination of your email-id and password that you use for creating your discord account</p>
+
+    <h2>How to find Authentication Key?</h2>
+    <p>&nbsp;Step 1:<br>
+        &emsp;Login to your discord account</p>
+    <img src="{% static 'assets/auth-img-01.png' %}" class='auth-img' alt="">
+    <p>&nbsp;Step 2:<br>
+        &emsp;Go to the channel you want Danker Man to work on</p>
+    <p>&nbsp;Step 3:<br>
+        &emsp;Press ctrl + shift + i or open inspector tab, There you can see "Network Tab", click on it</p>
+    <img src="{% static 'assets/auth-img-02.png' %}" class='auth-img' alt="">
+    <p>&nbsp;Step 4:<br>
+        &emsp;Send a message in the channel</p>
+    <p>&nbsp;Step 5:<br>
+        &emsp;Now, you can see the message request in "Network Tab", click on it</p>
+    <img src="{% static 'assets/auth-img-03.png' %}" class='auth-img' alt="">
+    <p>&nbsp;Step 6:<br>
+        &emsp;Scroll down in the window that opens, under the "Header" section you can see the authentication key</p>
+    <img src="{% static 'assets/auth-img-04.png' %}" class='auth-img' alt="">
+
+    <h1><strong>Channel ID</strong></h1>
+
+    <h2>What is channel id?</h2>
+    <p>&nbsp;channel id is set of unique number that was assign to your channel</p>
+
+    <h2>How to find Channel ID?</h2>
+    <p>&nbsp;Step 1:<br>
+        &emsp;Login to your discord account</p>
+    <img src="{% static 'assets/auth-img-01.png' %}" class='auth-img' alt="">
+    <p>&nbsp;Step 2:<br>
+        &emsp;Go to the channel you want Danker Man to work on</p>
+    <p>&nbsp;Step 3:<br>
+        &emsp;The last part of the url is your channel id ( All numbers after the last slash("/") ).</p>
+    <img src="{% static 'assets/auth-img-05.png' %}" class='auth-img' alt="">
+
+    <h3>Go back to UserAuth Form</h3>
+    <div class="input-group-btn">
+        <a href="{% url 'UserAuthForm' %}" title="" class="btn btn-primary btn-lg">Go Back</a>
+    </div>
+
+</div>
+
+{% endblock content1 %}

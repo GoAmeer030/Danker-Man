@@ -1,0 +1,71 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title1 %}
+
+<title>Premium Membership</title>
+
+{% endblock title1 %}
+
+{% block content1 %}
+
+<div class="section-container">
+    <div class="container">
+        <div class="row section-container-spacer">
+            <div class="col-xs-12">
+                <div class="text-center">
+                    <h1>Pricing</h1>
+                </div>
+                <div class="col-md-8 col-md-offset-2">
+                    <p>Buy one of our plans, get many additional benifits and 
+                        and become a supporter.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="pricing-card pricing-primary">
+                    <h3>Rich Man</h3>
+                    <h6 class="price">0 <span>$/MO</span></h6>
+                </div>
+                <div class="pricing-features">
+                    <ul class="features">
+                        <li class="pricing-benifits">Coming Soon</li>
+                    </ul>
+
+                    <a href="{% url 'contactus' %}" class="btn btn-primary" title="">Subscribe</a>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-card pricing-info">
+                    <h3>Billi Man</h3>
+                    <h6 class="price"> 0 <span>$/MO</span></h6>
+                </div>
+                <div class="pricing-features">
+                    <ul class="features">
+                        <li class="pricing-benifits">Coming Soon</li>
+                    </ul>
+
+                    <a href="{% url 'contactus' %}" class="btn btn-primary" title="">Subscribe</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="pricing-card pricing-secondary">
+                    <h3>Milli Man</h3>
+                    <h6 class="price">0 <span>$/MO</span></h6>
+                </div>
+                <div class="pricing-features">
+                    <ul class="features">
+                        <li class="pricing-benifits">Coming Soon</li>
+                    </ul>
+                    <a href="{% url 'contactus' %}" class="btn btn-primary" title="">Subscribe</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content1 %}

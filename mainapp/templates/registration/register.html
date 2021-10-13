@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title1 %}
+
+<title>Sign Up</title>
+
+{% endblock title1 %}
+
+{% block content1 %}
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+
+    <h2><a class="inactive underlineHover" href="{% url 'login' %}"> Sign In</a></h2>
+    <h2 class="active"> Sign Up </h2>
+
+    <div class="fadeIn first">
+      <img src="{% static 'assets/login.png' %}" id="icon" alt="User Icon" />
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" id="login" class="fadeIn second" name="username" placeholder="Username">
+      <input type="text" id="email" class="fadeIn second" name="email" placeholder="Email ID">
+      <input type="text" id="password" class="fadeIn third" name="password" placeholder="Password">
+      <input type="text" id="password2" class="fadeIn third" name="password2" placeholder="Confirm Password">
+      <p class="s_p fadeIn third">By registering, your are accepting our Terms and Conditions, Privacy Policy and Disclaimer</p>
+      <input type="submit" class="fadeIn fourth" value="Register">
+    </form>
+
+    <div id="formFooter">
+      <a class="underlineHover" href="{% url 'forgetpass' %}">Already Have a Account?</a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content1 %}

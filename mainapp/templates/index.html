@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+
+    {% block title1 %}
+    <title>Danker Man</title>
+    {% endblock title1 %}
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+    </style>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+</head>
+
+<body>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
+
+    <header>
+        <nav class="navbar  navbar-fixed-top navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle uarr collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse-uarr">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'Home' %}" title="">
+                        <img src="{% static 'assets/nav_bar_logo.png' %}" class="navbar-logo-img" alt="" width="75"
+                            height="auto">
+                    </a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="navbar-collapse-uarr">
+                    {% if user.is_authenticated %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'Home' %}" title="" class="active">Home</a></li>
+                        <li><a href="{% url 'donate' %}" title="">Donate</a></li>
+                        <li><a href="{% url 'tac' %}" title="">Terms & Conditions</a></li>
+                        <li><a href="{% url 'pp' %}" title="">Privacy Policy</a></li>
+                        <li><a href="{% url 'bot' %}" title="">Bot</a></li>
+                        <li><a href="{% url 'pmembership' %}" title="">Premium Membership</a></li>
+                        <li><a href="{% url 'edit_profile' %}" title="">Edit Profile</a></li>
+                    </ul>
+                    {% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'Home' %}" title="" class="active">Home</a></li>
+                        <li><a href="{% url 'donate' %}" title="">Donate</a></li>
+                        <li><a href="{% url 'tac' %}" title="">Terms & Conditions</a></li>
+                        <li><a href="{% url 'pp' %}" title="">Privacy Policy</a></li>
+                        <li><a href="{% url 'dis' %}" title="">Disclaimer</a></li>
+                        <li><a href="{% url 'pmembership' %}" title="">Premium Membership</a></li>
+                        <li><a href="{% url 'aboutus' %}" title="">About Us</a></li>
+                        <li>
+                            <p>
+                                <a href="{% url 'register' %}" class="btn btn-primary navbar-btn" title="">Sign Up</a>
+                            </p>
+                        </li>
+                    </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    {% block content1 %}
+
+    <div class="white-text-container background-image-container"
+        style="background-image: url('./static/assets/Top_Banner.png')">
+        <div class="opacity"></div>
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <h1>Danker Man</h1>
+                    <p>A web based automation bot for games!..
+                        Register fast!..</p>
+                    <a href="{% url 'register' %}" title="" class="btn btn-lg btn-primary">Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container border-section-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 section-container-spacer">
+                    <div class="text-center">
+                        <h3>! Disclaimer !</h3>
+                        <p>Self botting is against the rule of DISCORD and <br>
+                            The games so DO IT ON YOUR OWN RISK</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="fa-container">
+                        <i class="fa fa-comment-o fa-3x" aria-hidden="true"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3>! Free Members !</h3>
+                    </div>
+                    <div>
+                        <p>We recommend creating a new DISCORD account for using out bot
+                            Because of IP address your account may be BAN at ANY TIME</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="fa-container">
+                        <i class="fa fa-heart-o fa-3x" aria-hidden="true"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3>! Premium Members !</h3>
+                    </div>
+                    <div>
+                        <p>We recommend you guys to avoid our web bot and use the software
+                            that comes with Premium Members ship so you guys can avoid IP problems</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="fa-container">
+                        <i class="fa fa-bell-o fa-3x" aria-hidden="true"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3>! All !</h3>
+                    </div>
+                    <div>
+                        <p>If the bot is not started after the start button clicked,
+                            check your mail for a Conformation mail from DISCORD</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+
+
+                    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <img class="img-responsive" src="{% static 'assets/img-01.png' %}" alt="First slide">
+                            </div>
+                            <div class="item">
+                                <img class="img-responsive" src="{% static 'assets/img-02.jpg' %}" alt="Second slide">
+                            </div>
+                            <div class="item">
+                                <img class="img-responsive" src="{% static 'assets/img-03.jpg' %}" alt="Third slide">
+                            </div>
+                        </div>
+                        <ol class="carousel-indicators">
+                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                        </ol>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container background-color-container white-text-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="text-center">
+                        <h2>! Donate Us !</h2>
+                        <p>If you like our project and if you like to contribute us Then Donate Us</p>
+                        <a href=".{% url 'donate' %}" title="" class="btn btn-primary btn-lg">Donate</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <img class="img-responsive" src="{% static 'assets/img-04.png' %}" alt="">
+                </div>
+
+                <div class="col-md-5">
+                    <ul class="features">
+                        <li>
+                            <h3>Random Typing</h3>
+                            <p>For anti bot detection we implement random typing speed in our script</p>
+                        </li>
+                        <li>
+                            <h3>Random Commands</h3>
+                            <p>The Commands are completely random so it will help for anti bot detection</p>
+                        </li>
+                        <li>
+                            <h3>Separate Server</h3>
+                            <p>We created a separate server with channel ID so join and rock roll</p>
+                        </li>
+                    </ul>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <img class="img-responsive page-base-image" src="{% static 'assets/logo-01.png' %}" alt="">
+
+                    </div>
+                    <div class="col-md-4">
+                        <img class="img-responsive page-base-image" src="{% static 'assets/logo-02.png' %}" alt="">
+                    </div>
+                    <div class="col-md-4">
+                        <img class="img-responsive page-base-image" src="{% static 'assets/logo-03.png' %}" alt="">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {% endblock content1 %}
+
+    <footer>
+        <div class="section-container footer-container">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>Tell Us Your Opinion</h4>
+                        <p>Tell Us if you have any suggestions</p>
+                        <div class="input-group-btn">
+                            <a href="{% url 'contactus' %}" title="" class="btn btn-primary btn-lg">Contact Us</a>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h4>Do you like ? Share this !</h4>
+                        <p>
+                            <a href="https://facebook.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://twitter.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/" class="social-round-icon white-round-icon fa-icon"
+                                title="">
+                                <i class="fa fa-linkedin" aria-hidden="true"></i>
+                            </a>
+                        </p>
+                        <p><small> Copyright © Danker Man | All Rights Reserved</small></p>
+                    </div>
+
+                    <div class="col-md-4">
+                        <h4>Know about us</h4>
+                        <p>Know about Us and Support Us</p>
+                        <div class="input-group-btn">
+                            <a href="{% url 'aboutus' %}" title="" class="btn btn-primary btn-lg">About Us</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="{% static 'main.js' %}"></script>
+    <div class="message">
+        {% if messages %}
+        {% for message in messages %}
+        <script>
+            $(document).ready(function () {
+
+                toastr.options.closeButton = true;
+                toastr.options.progressBar = true;
+                toastr.options.positionClass = "toast-bottom-right";
+                toastr.options.showDuration = "300";
+                toastr.options.hideDuration = "1000";
+                toastr.options.timeOut = "5000";
+                toastr.options.extendedTimeOut = "1000";
+                toastr.options.showEasing = "swing";
+                toastr.options.hideEasing = "linear";
+                toastr.options.showMethod = "fadeIn";
+                toastr.options.hideMethod = "fadeOut";
+
+                toastr.success("{{message}}");
+
+            });
+        </script>
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+</html>

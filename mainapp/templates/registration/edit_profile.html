@@ -1,0 +1,58 @@
+{% extends 'registration/register.html' %}
+{% load static %}
+
+{% block title1 %}
+
+<title>Edit Profile</title>
+
+{% endblock title1 %}
+
+{% block content1 %}
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+
+    <h2 class="active"> Edit Profile </h2>
+    <div class="fadeIn first">
+      <img src="{% static 'assets/login.png' %}" id="icon" alt="User Icon" />
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" id="username" class="fadeIn second" name="username" placeholder="Username"
+        value="{{user.username}}">
+      <input type="text" id="id_email" class="fadeIn second" name="id_email" placeholder="Email ID"
+        value="{{user.email}}">
+      <input type="text" id="D_Auth" class="fadeIn second" name="D_Auth" placeholder="Authentication Key"
+        value="{{userauth.D_Auth}}">
+      <input type="text" id="D_ChID" class="fadeIn third" name="D_ChID" placeholder="Channel ID"
+        value="{{userauth.D_ChID}}">
+      <select type="text" name="U_Type" id="U_Type" class="fadeIn third">
+        {% if userauth.U_Type == "Normal" %}
+        <option type="text" value="Normal">Normal Player</option>
+        <option type="text" value="Patron">Patron Player</option>
+        {% else %}
+        <option type="text" value="Patron">Patron Player</option>
+        <option type="text" value="Normal">Normal Player</option>
+        {% endif %}
+      </select>
+      <select type="text" name="N_Loss" id="N_Loss" class="fadeIn third">
+        {% if userauth.N_Loss == "Noloss" %}
+        <option type="text" value="Noloss">No Loss</option>
+        <option type="text" value="Normal">Normal</option>
+        {% else %}
+        <option type="text" value="Normal">Normal</option>
+        <option type="text" value="Noloss">No Loss</option>
+        {% endif %}
+      </select>
+      <input type="submit" class="fadeIn fourth" value="Update">
+    </form>
+
+    <div id="formFooter">
+      <a class="underlineHover" href="{% url 'forgetpass' %}">Forgot Password?</a>
+    </div>
+
+  </div>
+</div>
+
+{% endblock content1 %}

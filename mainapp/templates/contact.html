@@ -1,0 +1,60 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title1 %}
+
+<title>Contact Us</title>
+
+{% endblock title1 %}
+
+{% block content1 %}
+
+<div class="section-container no-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <form action="" class="reveal-content contact-form" method="post">
+                        {% csrf_token %}
+                            <div class="form-group">
+                                <input type="name" name="name" class="form-control" id="name" placeholder="Full name">
+                            </div>
+                            <div class="form-group">
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="subject" class="form-control" id="subject" placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+                                <textarea name="message" class="form-control" rows="3" placeholder="Enter your message"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg">Send</button>
+                        </form>
+                    </div>
+
+
+                    <div class="col-md-5 col-md-offset-1">
+
+                        <h3>Tell Us Your Opinion</h3>
+
+                        <div>
+                            <p>What ever suggestion, improvement, doubts, <br />queries, problems you have, <br/> Please Tell Us, its our reslove or improve it.</p>
+                        </div>
+                        <div>
+                            <p>dankerman.cservice@gmail.com<br>Discord<br/> link </p>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock content1 %}
