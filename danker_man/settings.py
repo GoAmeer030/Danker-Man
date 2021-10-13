@@ -54,7 +54,6 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 ROOT_URLCONF = 'danker_man.urls'
 
 TEMPLATES = [
