@@ -13,13 +13,11 @@ def Send_Message(Message, tokan, ch_id, usera, bnumb, user):
         sec = random.choice([3, 4, 5, 6])
         time.sleep(sec)
         discum.Client(token=tokan, user_agent=usera, build_num=bnumb).sendMessage(ch_id, Message)
-        print("Top")
     else:
         bot = discum.Client(token=tokan)
         bnumb = bot.getBuildNumber()
         usera = bot._Client__user_agent
         user_obj = User.objects.get(username=user)
-        print("Bottom")
         bot.sendMessage(ch_id, Message)
 
         userobj = UserAuthentication.objects.update_or_create(
