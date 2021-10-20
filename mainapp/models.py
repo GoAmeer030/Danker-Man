@@ -9,7 +9,7 @@ class UserAuthentication(models.Model):
     )
 
     D_Auth = models.CharField(max_length=100, unique=True)
-    D_ChID = models.PositiveIntegerField(null=False)
+    D_ChID = models.CharField(max_length=100, unique=True)
     U_Type = models.CharField(max_length=7)
     N_Loss = models.CharField(max_length=7)
     U_PreM = models.BooleanField(null=False, default=False)
