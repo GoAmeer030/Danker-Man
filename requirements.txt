@@ -2,6 +2,7 @@ amqp==5.0.6
 anyjson==0.3.3
 asgiref==3.4.1
 billiard==3.6.4.0
+Brotli==1.0.9
 celery==5.1.2
 certifi==2021.5.30
 charset-normalizer==2.0.6
@@ -9,16 +10,19 @@ click==7.1.2
 click-didyoumean==0.0.3
 click-plugins==1.1.1
 click-repl==0.2.0
+colorama==0.4.4
+discum @ git+https://github.com/Merubokkusu/Discord-S.C.U.M.git@43c2ed360a06d2783aa704c1a663262a9c19a859
 dj-database-url==0.5.0
 Django==3.2.7
 django-celery-beat==2.0.0
 django-celery-results==2.2.0
 django-crispy-forms==1.13.0
-django-rest-framework==0.1.0
 django-heroku==0.3.1
+django-rest-framework==0.1.0
 django-timezone-field==4.2.1
 djangorestframework==3.12.4
 docopt==0.6.2
+filetype==1.0.8
 gunicorn==20.1.0
 idna==3.2
 kombu==5.1.0
@@ -29,12 +33,16 @@ psycopg2-binary==2.9.1
 python-crontab==2.5.1
 python-dateutil==2.8.2
 pytz==2021.1
+random-user-agent==1.0.1
 redis==3.5.3
 requests==2.26.0
+requests-toolbelt==0.9.1
 six==1.16.0
 sqlparse==0.2.4
+ua-parser==0.10.0
 urllib3==1.26.7
 vine==5.0.0
 wcwidth==0.2.5
+websocket-client==0.59.0
 whitenoise==5.3.0
 yarg==0.1.9

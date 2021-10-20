@@ -1,29 +1,34 @@
+import discum
 from celery import shared_task
-from .models import UserAuthentication
-import billiard as mp
-import requests
+from .models import UserAuthentication, User
+import billiard
 import random
 import time
 
-def Danker_Man(Token, Channel_Id, Message):
-    payload = {
-        'content': Message
-    }
+global Nor_Timer_Back, Send_Message_Front
 
-    header = {
-        'authorization': Token
-    }
+def Send_Message(Message, tokan, ch_id, usera, bnumb, user):
 
-    url_typing = 'https://discord.com/api/v9/channels/{}/typing'.format(Channel_Id)
+    if usera is not None and bnumb is not None:
+        sec = random.choice([3, 4, 5, 6])
+        time.sleep(sec)
+        discum.Client(token=tokan, user_agent=usera, build_num=bnumb).sendMessage(ch_id, Message)
+        print("Top")
+    else:
+        bot = discum.Client(token=tokan)
+        bnumb = bot.getBuildNumber()
+        usera = bot._Client__user_agent
+        user_obj = User.objects.get(username=user)
+        print("Bottom")
+        bot.sendMessage(ch_id, Message)
 
-    url_message = 'https://discord.com/api/v9/channels/{}/messages'.format(Channel_Id)
-
-    r1 = requests.post(url_typing, headers=header)
-
-    sec = random.choice([3, 4, 5, 6])
-    time.sleep(sec)
-
-    r2 = requests.post(url_message, data=payload, headers=header)
+        userobj = UserAuthentication.objects.update_or_create(
+            U_User = user_obj,
+            defaults={
+                "U_Agen": usera,
+                "B_Numb": bnumb,
+            }
+        )
 
 def Nor_Timer(item, Messages):
 
@@ -34,11 +39,16 @@ def Nor_Timer(item, Messages):
         if i == item[1]:
             Messages.append(item)
 
-def CommandSelection(Token, Channel_Id, Messages):
+def CommandSelection(Messages, user):
 
     while True:
 
         try:
+
+            tokan = getattr(UserAuthentication.objects.first(), 'D_Auth')
+            ch_id = str(getattr(UserAuthentication.objects.first(), 'D_ChID'))
+            usera = getattr(UserAuthentication.objects.first(), 'U_Agen')
+            bnumb = getattr(UserAuthentication.objects.first(), 'B_Numb')
 
             item = random.choice(Messages)
 
@@ -47,75 +57,53 @@ def CommandSelection(Token, Channel_Id, Messages):
 
                 item_1 = random.randrange(500, 3000)
 
-                Nor_Timer_Back = mp.Process(target=Nor_Timer, args=(item, Messages))
-                Danker_Man_Front = mp.Process(target=Danker_Man, args =(Token, Channel_Id, ('{0} {1}'.format(item[0],str(item_1)))))
+                Nor_Timer_Back = billiard.Process(target=Nor_Timer, args=(item, Messages))
+                Send_Message_Front = billiard.Process(target=Send_Message, args =(f'{item[0]} {str(item_1)}', tokan, ch_id, usera, bnumb, user))
+
+                Nor_Timer_Back.daemon = True
+                Send_Message_Front.daemon = True
 
                 Nor_Timer_Back.start()
-                Danker_Man_Front.start()
+                Send_Message_Front.start()
 
-                Danker_Man_Front.join()
+                Send_Message_Front.join()
 
             else:
 
-                Nor_Timer_Back = mp.Process(target=Nor_Timer, args=(item, Messages))
-                Danker_Man_Front = mp.Process(target=Danker_Man, args =(Token, Channel_Id, item[0]))
+                Nor_Timer_Back = billiard.Process(target=Nor_Timer, args=(item, Messages))
+                Send_Message_Front = billiard.Process(target=Send_Message, args =(item[0], tokan, ch_id, usera, bnumb, user),)
+
+                Nor_Timer_Back.daemon = True
+                Send_Message_Front.daemon = True
 
                 Nor_Timer_Back.start()
-                Danker_Man_Front.start()
+                Send_Message_Front.start()
 
-                Danker_Man_Front.join()
+                Send_Message_Front.join()
 
 
         except IndexError:
 
             time.sleep(10)
-            CommandSelection(Token, Channel_Id, Messages)
+            CommandSelection(Messages)
 
 @shared_task(bind=True)
-def dank_memer(self):
+def bbot(self, bot, user):
 
-    field_name = 'D_Auth'
-    obj = UserAuthentication.objects.first()
-    Token = getattr(obj, field_name)
+    if bot == 'Dank_Memer':
+        Messages = [['pls fish', 40], ['pls hunt', 40], ['pls dig', 40],
+                      ['pls se', 10], ['pls beg', 40], ['pls dep all', 300],
+                      ['pls bal', 120], ['pls level', 3600], ['pls bet', 8],
+                      ]
+    else:
+        Messages = [['!tips', 300], ['!clean', 7200], ['!work', 600], ['!flip heads', 60], ['!flip tails', 60], ['!scratch', 30], ['!slots', 60], ['!roll', 60]]
 
-    field_name = 'D_ChID'
-    obj = UserAuthentication.objects.first()
-    Ch_ID = getattr(obj, field_name)
+    main = billiard.Process(target=CommandSelection, args = (Messages, user))
 
-    Messages = [['pls fish', 40], ['pls hunt', 40], ['pls dig', 40],
-                ['pls se', 10], ['pls beg', 40], ['pls dep all', 300],
-                ['pls bal', 120], ['pls level', 3600], ['pls bet', 8],
-                ]
-
-    y = mp.Process(target=CommandSelection, args = (Token, Ch_ID, Messages))
-
-    y.start()
+    main.start()
 
     time.sleep(60)
 
-    y.terminate()
-
-    return "Done"
-
-@shared_task(bind=True)
-def taco(self):
-
-    field_name = 'D_Auth'
-    obj = UserAuthentication.objects.first()
-    Token = getattr(obj, field_name)
-
-    field_name = 'D_ChID'
-    obj = UserAuthentication.objects.first()
-    Ch_ID = getattr(obj, field_name)
-
-    Messages = [['!tips', 300], ['!clean', 7200], ['!work', 600], ['flip heads', 60], ['flip tails', 60], ['!scratch', 30], ['!slots', 60], ['!roll', 60]]
-
-    y = mp.Process(target=CommandSelection, args = (Token, Ch_ID, Messages))
-
-    y.start()
-
-    time.sleep(60)
-
-    y.terminate()
+    main.terminate()
 
     return "Done"

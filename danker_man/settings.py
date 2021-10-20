@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-0nzf^tc$qlrin1nu9g4)m&!im47*=lkp(ohz8(64tlmmq%-k8@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -128,8 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
 STATICFILES_DIRS = [
     BASE_DIR,
     "mainapp/static",
@@ -140,14 +142,15 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
+if not DEBUG:
+    CHANNEL_LAYERS = {
+        "default": {
+            "BACKEND": "channels_redis.core.RedisChannelLayer",
+            "CONFIG": {
+                "hosts": [os.environ.get('REDIS_URL', 'redis://localhost:6379')]
+            }
         }
     }
-}
 
 LOGIN_REDIRECT_URL = "home"
 
@@ -163,8 +166,10 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 #CELERY SETTINGS
 
-CELERY_BROKER_URL = os.environ['REDIS_URL']
-#CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+if DEBUG:
+    CELERY_BROKER_URL = "redis://127.0.0.1:6379"
+elif not DEBUG:
+    CELERY_BROKER_URL = os.environ['REDIS_URL']
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'

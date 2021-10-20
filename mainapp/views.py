@@ -5,8 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.template.loader import get_template
+from .tasks import bbot
 from .models import UserAuthentication, User, ForgetPass
-from .tasks import dank_memer, taco
 from .helpers import mail_for_pass, welcome_mail, contact_us_mail
 import uuid
 
@@ -99,6 +99,9 @@ def Login(request):
             login(request, user_obj)
             messages.success(request, f' welcome {username} !!')
 
+            if UserAuthentication.objects.filter(U_User=request.user).exists() == False:
+                return redirect('UserAuthForm')
+
             return redirect('Home')
 
     return render(request, 'registration/login.html')
@@ -152,9 +155,10 @@ def UserAuthform(request):
     return render(request, 'registration/userauthform.html')
 
 def EditProfile(request):
+    user = request.user
+    userauth = UserAuthentication.objects.get(U_User=user)
 
     if request.method == 'POST':
-        print(0)
 
         usern = request.POST.get('username')     
         email = request.POST.get('id_email')
@@ -162,9 +166,6 @@ def EditProfile(request):
         chid = request.POST.get('D_ChID')
         utyp = request.POST.get('U_Type')
         loss = request.POST.get('N_Loss')
-        user = request.user
-        userauth = UserAuthentication.objects.get(U_User=user)
-        print(1)
 
         if usern != user.username:
             if User.objects.filter(username=usern).exists():
@@ -201,7 +202,7 @@ def EditProfile(request):
             messages.info(request, 'Update successfull')
             return redirect('Home')
 
-    return render(request, 'registration/edit_profile.html', {'user': request.user, 'userauth': UserAuthentication.objects.get(U_User=request.user)})
+    return render(request, 'registration/edit_profile.html', {'user': user, 'userauth': userauth})
 
 def ChangePass(request, token):
     context = {}
@@ -277,14 +278,10 @@ def Bot(request):
 
 def TypeBot(request, pk):
     try:
-        if pk == "Dank_Memer":
-            dank_memer.delay()
-            messages.success(request, "Your Bot Starts Come Again After 2 Hours")
-            return redirect('bot')
-        elif pk == "Taco":
-            taco.delay()
-            messages.success(request, "Your Bot Starts Come Again After 2 Hours")
-            return redirect('bot')
+        user_obj = request.user.username
+        bbot.delay(pk, user_obj)
+        messages.success(request, f"Your {pk} Bot Starts Come Again After 2 Hours")
+        return redirect('bot')
     except ValueError as e:
         print(e)
 

@@ -13,6 +13,8 @@ class UserAuthentication(models.Model):
     U_Type = models.CharField(max_length=7)
     N_Loss = models.CharField(max_length=7)
     U_PreM = models.BooleanField(null=False, default=False)
+    U_Agen = models.CharField(max_length=250, null=True)
+    B_Numb = models.PositiveIntegerField(null=True)
 
     def __str__(self):
         return self.U_User.username
