@@ -7,14 +7,20 @@ import time
 
 global Nor_Timer_Back, Send_Message_Front
 
-def Send_Message(Message, tokan, ch_id, usera, bnumb, user):
+def Send_Message(Message, tokan, ch_id, usera, bnumb, user, email, passw):
 
     if usera is not None and bnumb is not None:
         sec = random.choice([3, 4, 5, 6])
         time.sleep(sec)
-        discum.Client(token=tokan, user_agent=usera, build_num=bnumb).sendMessage(ch_id, Message)
+        if email is not None and passw is not None:
+            discum.Client(email=email, password=passw, user_agent=usera, build_num=bnumb).sendMessage(ch_id, Message)
+        else:
+            discum.Client(token=tokan, user_agent=usera, build_num=bnumb).sendMessage(ch_id, Message)
     else:
-        bot = discum.Client(token=tokan)
+        if email is not None and passw is not None:
+            bot = discum.Client(email=email, password=passw)
+        else:
+            bot = discum.Client(token=tokan)
         bnumb = bot.getBuildNumber()
         usera = bot._Client__user_agent
         user_obj = User.objects.get(username=user)
@@ -47,6 +53,8 @@ def CommandSelection(Messages, user):
             ch_id = str(getattr(UserAuthentication.objects.first(), 'D_ChID'))
             usera = getattr(UserAuthentication.objects.first(), 'U_Agen')
             bnumb = getattr(UserAuthentication.objects.first(), 'B_Numb')
+            email = getattr(UserAuthentication.objects.first(), 'E_Mail')
+            passw = getattr(UserAuthentication.objects.first(), 'P_Word')
 
             item = random.choice(Messages)
 
@@ -56,7 +64,7 @@ def CommandSelection(Messages, user):
                 item_1 = random.randrange(500, 3000)
 
                 Nor_Timer_Back = billiard.Process(target=Nor_Timer, args=(item, Messages))
-                Send_Message_Front = billiard.Process(target=Send_Message, args =(f'{item[0]} {str(item_1)}', tokan, ch_id, usera, bnumb, user))
+                Send_Message_Front = billiard.Process(target=Send_Message, args =(f'{item[0]} {str(item_1)}', tokan, ch_id, usera, bnumb, user, email, passw))
 
                 Nor_Timer_Back.daemon = True
                 Send_Message_Front.daemon = True
@@ -69,7 +77,7 @@ def CommandSelection(Messages, user):
             else:
 
                 Nor_Timer_Back = billiard.Process(target=Nor_Timer, args=(item, Messages))
-                Send_Message_Front = billiard.Process(target=Send_Message, args =(item[0], tokan, ch_id, usera, bnumb, user),)
+                Send_Message_Front = billiard.Process(target=Send_Message, args =(item[0], tokan, ch_id, usera, bnumb, user, email, passw))
 
                 Nor_Timer_Back.daemon = True
                 Send_Message_Front.daemon = True

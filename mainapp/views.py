@@ -31,32 +31,32 @@ def register(request):
         password = request.POST.get('password')
         conpass = request.POST.get('password2')
 
-        if username is None:
-            messages.info(request, 'You must enter Username')
+        if username == '':
+            messages.error(request, 'You must enter Username')
             return redirect('register')
 
-        elif email is None:
-            messages.info(request, 'You must enter Email')
+        elif email == '':
+            messages.error(request, 'You must enter Email')
             return redirect('register')
 
-        elif password is None:
-            messages.info(request, 'You must enter Password')
+        elif password == '':
+            messages.error(request, 'You must enter Password')
             return redirect('register')
 
-        elif conpass is None:
-            messages.info(request, 'You must enter Confirm Password')
+        elif conpass == '':
+            messages.error(request, 'You must enter Confirm Password')
             return redirect('register')
 
         elif password != conpass:
-            messages.info(request, 'Confirm Password And Password Must Be Same')
+            messages.error(request, 'Confirm Password And Password Must Be Same')
             return redirect('register')
 
         elif User.objects.filter(username=username).exists():
-            messages.info(request, 'Username is already taken')
+            messages.warning(request, 'Username is already taken')
             return redirect('register')
 
         elif User.objects.filter(email=email).exists():
-            messages.info(request, 'Email is already Taken')
+            messages.warning(request, 'Email is already Taken')
             return redirect('register')
 
         else:
@@ -78,23 +78,23 @@ def Login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        if username is None:
-            messages.info(request, 'You must enter Username')
+        if username == '':
+            messages.error(request, 'You must enter Username')
             return redirect('login')
 
-        elif password is None:
-            messages.info(request, 'You must enter Password')
+        elif password == '':
+            messages.error(request, 'You must enter Password')
             return redirect('login')
 
         elif User.objects.filter(username=username).exists() == False:
-            messages.info(request, 'account does not exit plz sign in')
+            messages.warning(request, 'account does not exit plz sign in')
             return redirect('login')
 
-        elif username is not None and password is not None:
+        elif username != '' and password != '':
             user_obj = authenticate(request, username = username, password = password)
 
             if user_obj is None:
-                messages.info(request, 'Worng Password Try Again')
+                messages.warning(request, 'Worng Password Try Again')
 
             login(request, user_obj)
             messages.success(request, f' welcome {username} !!')
@@ -121,20 +121,20 @@ def UserAuthform(request):
         utyp = request.POST.get('U_Type')
         loss = request.POST.get('N_Loss')
 
-        if auth is None:
-            messages.info(request, 'Authentication Key Must be Entered')
+        if auth == '':
+            messages.error(request, 'Authentication Key Must be Entered')
             return redirect('UserAuthForm')
 
-        elif chid is None:
-            messages.info(request, 'Channel ID Must be Entered')
+        elif chid == '':
+            messages.error(request, 'Channel ID Must be Entered')
             return redirect('UserAuthForm')
 
         elif UserAuthentication.objects.filter(D_Auth=auth).exists():
-            messages.info(request, 'Authentication key in Use')
+            messages.warning(request, 'Authentication key in Use')
             return redirect('UserAuthForm')
 
-        elif utyp is None:
-            messages.info(request, 'User Type Must Be Selected')
+        elif utyp == '':
+            messages.error(request, 'User Type Must Be Selected')
             return redirect('UserAuthForm')
 
         else:
@@ -150,9 +150,63 @@ def UserAuthform(request):
                 }
             )
 
+            messages.success(request, 'Now you can start your bot in BOT page')
+
             return redirect('Home')
 
     return render(request, 'registration/userauthform.html')
+
+@login_required(login_url='login')
+def UserAuthemail(request):
+
+    if request.method == 'POST':
+
+        user = request.user.username
+        email = request.POST.get('email')
+        passw = request.POST.get('password')
+        chid = request.POST.get('D_ChID')
+        utyp = request.POST.get('U_Type')
+        loss = request.POST.get('N_Loss')
+
+        if email == '':
+            messages.error(request, 'Email Must be Entered')
+            return redirect('UserAuthForm')
+
+        elif passw == '':
+            messages.error(request, 'Password ID Must be Entered')
+            return redirect('UserAuthForm')
+
+        elif chid == '':
+            messages.error(request, 'Channel ID Must be Entered')
+            return redirect('UserAuthForm')
+
+        elif UserAuthentication.objects.filter(D_Auth=auth).exists():
+            messages.warning(request, 'Authentication key in Use')
+            return redirect('UserAuthForm')
+
+        elif utyp == '':
+            messages.error(request, 'User Type Must Be Selected')
+            return redirect('UserAuthForm')
+
+        else:
+            user_obj = User.objects.get(username=user)
+
+            userauth_obj = UserAuthentication.objects.update_or_create(
+                U_User = user_obj,
+                defaults = {
+                    "E_Mail": email,
+                    "P_Word": passw,
+                    "D_ChID": chid,
+                    "U_Type": utyp,
+                    "N_Loss": loss,
+                }
+            )
+
+            messages.success(request, 'Now you can start your bot in BOT page')
+
+            return redirect('Home')
+
+    return render(request, 'registration/userauthemail.html')
 
 def EditProfile(request):
     user = request.user
@@ -169,17 +223,17 @@ def EditProfile(request):
 
         if usern != user.username:
             if User.objects.filter(username=usern).exists():
-                messages.info(request, 'Username is already taken')
+                messages.warning(request, 'Username is already taken')
                 return redirect('edit_profile')
 
         elif user.email != email:
             if User.objects.filter(email=email).exists():
-                messages.info(request, 'Email is already Taken')
+                messages.warning(request, 'Email is already Taken')
                 return redirect('edit_profile')
 
         elif userauth.D_Auth != auth:
             if UserAuthentication.objects.filter(D_Auth=auth).exists():
-                messages.info(request, 'Authentication key in Use')
+                messages.warning(request, 'Authentication key in Use')
                 return redirect('edit_profile')
 
         if True:
@@ -199,7 +253,7 @@ def EditProfile(request):
                 "email": email,
                 }
             )
-            messages.info(request, 'Update successfull')
+            messages.success(request, 'Update successfull')
             return redirect('Home')
 
     return render(request, 'registration/edit_profile.html', {'user': user, 'userauth': userauth})
@@ -216,16 +270,19 @@ def ChangePass(request, token):
         username = request.POST.get('username')
 
         if username is None:
-            messages.info(request, "No user found")
+            messages.warning(request, "No user found")
             return redirect(f'/changepass/{token}/')
 
         if new_pass != con_pass:
-            messages.info(request, "New Password And Confirm Password Must Be Same")
+            messages.error(request, "New Password And Confirm Password Must Be Same")
             return redirect(f'/changepass/{token}/')
 
         user_obj = User.objects.get(username = username)
         user_obj.set_password(new_pass)
         user_obj.save()
+
+        messages.success(request, 'Password changed successfully')
+
         return redirect('login')
 
     return render(request, 'registration/changepass.html', context)
@@ -235,7 +292,7 @@ def Forgetpass(request):
         user = request.POST.get('username')
 
         if not User.objects.filter(username=user).exists():
-            messages.info(request, 'No user found with user username')
+            messages.warning(request, 'No user found with user username')
             return redirect('forgetpass')
 
         user_obj = User.objects.get(username=user)
@@ -265,7 +322,7 @@ def ContactUs(request):
         message = request.POST.get('message')
 
         contact_us_mail(name, email, subject, message)
-        messages.info(request, "Mail Send")
+        messages.success(request, "Your ticket created successfully we will reach you as soon as possible")
         return redirect('contactus')
 
     return render(request, 'contact.html', {})

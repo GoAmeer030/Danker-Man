@@ -12,17 +12,15 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
 
-    <h2 class="active"> User Authentication </h2>
-    <div class="fadeIn first">
-      <img src="{% static 'assets/login.png' %}" id="icon" alt="User Icon" />
-    </div>
+    <h2 class="active"> With Auth_Key </h2>
+    <h2><a class="inactive underlineHover" href="{% url 'UserAuthEmail' %}"> With Email_Password </a></h2>
 
     <form method="post">
       {% csrf_token %}
       <input type="text" id="D_Auth" class="fadeIn second" name="D_Auth" placeholder="Authentication Key">
-      <a class="underlineHover fadeIn second" href="{% url 'authhelp' %}">How to find Authentication Key</a>
+      <a class="underlineHover fadeIn second" href="{% url 'authhelp' %}" target="_blank" rel="noopener noreferrer">How to find Authentication Key</a>
       <input type="text" id="D_ChID" class="fadeIn third" name="D_ChID" placeholder="Channel ID">
-      <a class="underlineHover fadeIn third" href="{% url 'authhelp' %}">How to find Authentication Key</a>
+      <a class="underlineHover fadeIn third" href="{% url 'authhelp' %}" target="_blank" rel="noopener noreferrer">How to find Authentication Key</a>
       <select type="text" name="U_Type" id="U_Type" class="fadeIn third">
         <option type="text" value="Normal">Normal Player</option>
         <option type="text" value="Patron">Patron Player</option>

@@ -8,8 +8,10 @@ class UserAuthentication(models.Model):
         primary_key= True,
     )
 
-    D_Auth = models.CharField(max_length=100, unique=True)
-    D_ChID = models.CharField(max_length=100, unique=True)
+    D_Auth = models.CharField(max_length=100, null=True)
+    E_Mail = models.EmailField(max_length=100, null=True)
+    P_Word = models.CharField(max_length=100, null=True)
+    D_ChID = models.CharField(max_length=100)
     U_Type = models.CharField(max_length=7)
     N_Loss = models.CharField(max_length=7)
     U_PreM = models.BooleanField(null=False, default=False)

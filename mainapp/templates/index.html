@@ -23,6 +23,8 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
 
+    <link rel="favicon" sizes="57x57" href="{% static 'assets/favicon.ico' %}">
+
 </head>
 
 <body>
@@ -51,9 +53,13 @@
                         <li><a href="{% url 'donate' %}" title="">Donate</a></li>
                         <li><a href="{% url 'tac' %}" title="">Terms & Conditions</a></li>
                         <li><a href="{% url 'pp' %}" title="">Privacy Policy</a></li>
-                        <li><a href="{% url 'bot' %}" title="">Bot</a></li>
                         <li><a href="{% url 'pmembership' %}" title="">Premium Membership</a></li>
                         <li><a href="{% url 'edit_profile' %}" title="">Edit Profile</a></li>
+                        <li>
+                            <p>
+                                <a href="{% url 'bot' %}" class="btn btn-primary navbar-btn" title="">Bot</a>
+                            </p>
+                        </li>
                     </ul>
                     {% else %}
                     <ul class="nav navbar-nav navbar-right">
@@ -252,13 +258,13 @@
                     <div class="col-md-4">
                         <h4>Do you like ? Share this !</h4>
                         <p>
-                            <a href="https://facebook.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                            <a href="https://facebook.com/" class="social-round-icon white-round-icon fa-icon" target="_blank" rel="noopener noreferrer" title="">
                                 <i class="fa fa-facebook" aria-hidden="true"></i>
                             </a>
-                            <a href="https://twitter.com/" class="social-round-icon white-round-icon fa-icon" title="">
+                            <a href="https://twitter.com/" class="social-round-icon white-round-icon fa-icon" target="_blank" rel="noopener noreferrer" title="">
                                 <i class="fa fa-twitter" aria-hidden="true"></i>
                             </a>
-                            <a href="https://www.linkedin.com/" class="social-round-icon white-round-icon fa-icon"
+                            <a href="https://www.linkedin.com/" class="social-round-icon white-round-icon fa-icon" target="_blank" rel="noopener noreferrer"
                                 title="">
                                 <i class="fa fa-linkedin" aria-hidden="true"></i>
                             </a>
@@ -298,7 +304,7 @@
                 toastr.options.showMethod = "fadeIn";
                 toastr.options.hideMethod = "fadeOut";
 
-                toastr.success("{{message}}");
+                toastr.{{message.tags}}("{{message}}");
 
             });
         </script>

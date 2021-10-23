@@ -1,0 +1,37 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title1 %}
+
+<title>User Authentication</title>
+
+{% endblock title1 %}
+
+{% block content1 %}
+
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+
+    <h2><a class="inactive underlineHover" href="{% url 'UserAuthForm' %}"> With Auth_Key </a></h2>
+    <h2 class="active"> With Email_Password </h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <input type="text" id="Email" class="fadeIn second" name="Email" placeholder="Discord Email-Id">
+      <input type="password" id="password" class="fadeIn second" name="password" placeholder="Discord Password">
+      <input type="text" id="D_ChID" class="fadeIn third" name="D_ChID" placeholder="Channel ID">
+      <select type="text" name="U_Type" id="U_Type" class="fadeIn third">
+        <option type="text" value="Normal">Normal Player</option>
+        <option type="text" value="Patron">Patron Player</option>
+      </select>
+      <select type="text" name="N_Loss" id="N_Loss" class="fadeIn third">
+        <option type="text" value="Noloss">No Loss</option>
+        <option type="text" value="Normal">Normal</option>
+      </select>
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+
+  </div>
+</div>
+
+{% endblock content1 %}
