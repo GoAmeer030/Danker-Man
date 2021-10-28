@@ -1,5 +1,3 @@
-@import 'font-awesome.css';
-
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
@@ -5578,8 +5576,8 @@ h2 {
     content: "\F00C";
     position: absolute;
     left: -40px;
-    color: #8b62ff;
-    border: 1px solid #8b62ff;
+    color: #3c3;
+    border: 1px solid #3c3;
     width: 24px;
     height: 24px;
     line-height: 24px;
@@ -6181,4 +6179,19 @@ button:focus {
     align-items: center;
     justify-content: center;
     margin: 10%;
+}
+
+.fa-bell-o:before {
+    content: "\f0a2";
+    color: #03bb31;
+}
+
+.fa-heart-o:before {
+    content: "\f08a";
+    color: #03bb31;
+}
+
+.fa-comment-o:before {
+    content: "\f0e5";
+    color: #03bb31;
 }
