@@ -275,7 +275,7 @@
         }).call(e, n("juYr"))
     },
     "4FPD": function(t, e, n) {
-        t.exports = n.p + "./static/assets/Dankmemer_logo.png"
+        t.exports = n.p + "./static/assets/Dankmemer_logo.webp"
     },
     "6wzU": function(t, e, n) {
         n("Lu+Q"), n("s51k"), n("m5Wh"), n("x66a"), n("laCn"), n("hxo1"), n("mEQU"), n("1/9l"), n("oOvE"), n("gnpq"), n("vQEO"), n("V1TA")
@@ -284,7 +284,7 @@
         t.exports = n.p + "assets/images/mashuptemplate.svg"
     },
     GRrd: function(t, e, n) {
-        t.exports = n.p + "./static/assets/Top_Banner.png"
+        t.exports = n.p + "./static/assets/Top_Banner.webp"
     },
     JkW7: function(t, e, n) {
         "use strict";
@@ -300,10 +300,10 @@
         })
     },
     Kz47: function(t, e, n) {
-        t.exports = n.p + "./static/assets/logo-03.png"
+        t.exports = n.p + "./static/assets/logo-03.webp"
     },
     LZ8p: function(t, e, n) {
-        t.exports = n.p + "./static/assets/img-06.jpg"
+        t.exports = n.p + "./static/assets/img-06.webp"
     },
     "Lu+Q": function(t, e, n) {
         (function(t) {
@@ -348,13 +348,13 @@
     },
     PExH: function(t, e) {},
     Q9O4: function(t, e, n) {
-        t.exports = n.p + "./static/assets/img-02.jpg"
+        t.exports = n.p + "./static/assets/img-02.webp"
     },
     R1vl: function(t, e, n) {
-        t.exports = n.p + "./static/assets/img-07.jpg"
+        t.exports = n.p + "./static/assets/img-07.webp"
     },
     TyiG: function(t, e, n) {
-        t.exports = n.p + "./static/assets/logo-02.png"
+        t.exports = n.p + "./static/assets/logo-02.webp"
     },
     V1TA: function(t, e, n) {
         (function(t) {
@@ -563,7 +563,7 @@
     },
     e9iq: function(t, e) {},
     eqyU: function(t, e, n) {
-        t.exports = n.p + "./static/assets/img-04.png"
+        t.exports = n.p + "./static/assets/img-04.webp"
     },
     gnpq: function(t, e, n) {
         (function(t) {
@@ -3871,7 +3871,7 @@
         })
     },
     lIgk: function(t, e, n) {
-        t.exports = n.p + "./static/assets/img-01.png"
+        t.exports = n.p + "./static/assets/img-01.webp"
     },
     laCn: function(t, e, n) {
         (function(t) {
@@ -3955,7 +3955,7 @@
         }).call(e, n("juYr"))
     },
     lwI8: function(t, e, n) {
-        t.exports = n.p + "./static/assets/logo-01.png"
+        t.exports = n.p + "./static/assets/logo-01.webp"
     },
     m5Wh: function(t, e, n) {
         (function(t) {
@@ -4188,16 +4188,16 @@
             return e
         }
         var r = {
-            "./static/assets/img-05.jpg": "sDtc",
-            "./static/assets/img-06.jpg": "LZ8p",
-            "./static/assets/img-07.jpg": "R1vl",
-            "./static/assets/img-03.jpg": "lIgk",
-            "./static/assets/img-04.png": "eqyU",
-            "./static/assets/img-02.jpg": "Q9O4",
-            "./static/assets/Top_Banner.png": "GRrd",
-            "./static/assets/logo-01.png": "lwI8",
-            "./static/assets/logo-02.png": "TyiG",
-            "./static/assets/logo-03.png": "Kz47",
+            "./static/assets/img-05.webp": "sDtc",
+            "./static/assets/img-06.webp": "LZ8p",
+            "./static/assets/img-07.webp": "R1vl",
+            "./static/assets/img-03.webp": "lIgk",
+            "./static/assets/img-04.webp": "eqyU",
+            "./static/assets/img-02.webp": "Q9O4",
+            "./static/assets/Top_Banner.webp": "GRrd",
+            "./static/assets/logo-01.webp": "lwI8",
+            "./static/assets/logo-02.webp": "TyiG",
+            "./static/assets/logo-03.webp": "Kz47",
             "./images/mashuptemplate.svg": "DR4u"
         };
         i.keys = function() {
@@ -4238,7 +4238,7 @@
         }).call(e, n("juYr"))
     },
     sDtc: function(t, e, n) {
-        t.exports = n.p + "./static/assets/img-05.jpg"
+        t.exports = n.p + "./static/assets/img-05.webp"
     },
     vQEO: function(t, e, n) {
         (function(t) {
