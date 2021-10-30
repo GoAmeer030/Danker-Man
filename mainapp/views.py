@@ -193,8 +193,8 @@ def UserAuthemail(request):
 
     if request.method == 'POST':
 
-        user = request.user.username
-        email = request.POST.get('email')
+        user = request.user
+        email = request.POST.get('Email')
         passw = request.POST.get('password')
         chid = request.POST.get('D_ChID')
         utyp = request.POST.get('U_Type')
@@ -202,23 +202,23 @@ def UserAuthemail(request):
 
         if email == '':
             messages.error(request, 'Email Must be Entered')
-            return redirect('UserAuthForm')
+            return redirect('UserAuthEmail')
 
         elif passw == '':
             messages.error(request, 'Password ID Must be Entered')
-            return redirect('UserAuthForm')
+            return redirect('UserAuthEmail')
 
         elif chid == '':
             messages.error(request, 'Channel ID Must be Entered')
-            return redirect('UserAuthForm')
+            return redirect('UserAuthEmail')
 
-        elif UserAuthentication.objects.filter(D_Auth=auth).exists():
-            messages.warning(request, 'Authentication key in Use')
-            return redirect('UserAuthForm')
+        elif UserAuthentication.objects.filter(E_Mail=email).exists():
+            messages.warning(request, 'Email is already in use')
+            return redirect('UserAuthEmail')
 
         elif utyp == '':
             messages.error(request, 'User Type Must Be Selected')
-            return redirect('UserAuthForm')
+            return redirect('UserAuthEmail')
 
         else:
             user_obj = User.objects.get(username=user)
