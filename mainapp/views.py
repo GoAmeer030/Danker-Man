@@ -6,23 +6,49 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.template.loader import get_template
 from .tasks import bbot
-from .models import UserAuthentication, User, ForgetPass
+from .models import UserAuthentication, User, ForgetPass, Pre_User
 from .helpers import mail_for_pass, welcome_mail, contact_us_mail
 import uuid
 
 def Home(request):
-    return render(request, 'index.html', {})
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
+
+    return render(request, 'index.html', {'userp':userp})
 
 def tac(request):
-    return render(request, 'tac.html', {})
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
+
+    return render(request, 'tac.html', {'userp':userp})
 
 def pp(request):
-    return render(request, 'pp.html', {})
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
+        
+    return render(request, 'pp.html', {'userp':userp})
 
 def dis(request):
-    return render(request, 'dis.html', {})
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
+
+    return render(request, 'dis.html', {'userp':userp})
 
 def register(request):
+
+    userp = True
 
     if request.method == 'POST':
 
@@ -70,9 +96,11 @@ def register(request):
 
             return redirect('login')
 
-    return render(request, 'registration/register.html')
+    return render(request, 'registration/register.html', {'userp':userp})
 
 def Login(request):
+
+    userp = True
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -104,7 +132,7 @@ def Login(request):
 
             return redirect('Home')
 
-    return render(request, 'registration/login.html')
+    return render(request, 'registration/login.html', {'userp':userp})
 
 def Logout(request):
     logout(request)
@@ -112,6 +140,8 @@ def Logout(request):
 
 @login_required(login_url='login')
 def UserAuthform(request):
+
+    userp = True
 
     if request.method == 'POST':
 
@@ -154,10 +184,12 @@ def UserAuthform(request):
 
             return redirect('Home')
 
-    return render(request, 'registration/userauthform.html')
+    return render(request, 'registration/userauthform.html', {'userp':userp})
 
 @login_required(login_url='login')
 def UserAuthemail(request):
+
+    userp = True
 
     if request.method == 'POST':
 
@@ -206,11 +238,16 @@ def UserAuthemail(request):
 
             return redirect('Home')
 
-    return render(request, 'registration/userauthemail.html')
+    return render(request, 'registration/userauthemail.html', {'userp':userp})
 
 def EditProfile(request):
     user = request.user
     userauth = UserAuthentication.objects.get(U_User=user)
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
 
     if request.method == 'POST':
 
@@ -218,6 +255,8 @@ def EditProfile(request):
         email = request.POST.get('id_email')
         auth = request.POST.get('D_Auth')
         chid = request.POST.get('D_ChID')
+        dnme = request.POST.get('Email')
+        dpas = request.POST.get('password')
         utyp = request.POST.get('U_Type')
         loss = request.POST.get('N_Loss')
 
@@ -236,6 +275,11 @@ def EditProfile(request):
                 messages.warning(request, 'Authentication key in Use')
                 return redirect('edit_profile')
 
+        elif userauth.E_Mail != dnme:
+            if UserAuthentication.objects.filter(E_Mail=dnme).exists():
+                messages.warning(request, 'Email ID is already in use')
+                return redirect('edit_profile')
+
         if True:
             userauth_obj = UserAuthentication.objects.update_or_create(
                 U_User = user,
@@ -244,6 +288,8 @@ def EditProfile(request):
                     "D_ChID": chid,
                     "U_Type": utyp,
                     "N_Loss": loss,
+                    "E_Mail": dnme,
+                    "P_Word": dpas,
                 }
             )
             user_obj = User.objects.update_or_create(
@@ -256,13 +302,15 @@ def EditProfile(request):
             messages.success(request, 'Update successfull')
             return redirect('Home')
 
-    return render(request, 'registration/edit_profile.html', {'user': user, 'userauth': userauth})
+    return render(request, 'registration/edit_profile.html', {'user': user, 'userauth': userauth, 'userp':userp})
 
 def ChangePass(request, token):
     context = {}
 
     forgetpass_obj = ForgetPass.objects.filter(F_P_TO = token).first()
     context = {'username': forgetpass_obj.U_User.username}
+
+    userp = True
 
     if request.method == 'POST':
         new_pass = request.POST.get('new_password')
@@ -285,9 +333,12 @@ def ChangePass(request, token):
 
         return redirect('login')
 
-    return render(request, 'registration/changepass.html', context)
+    return render(request, 'registration/changepass.html', {'context':context, 'userp':userp})
 
 def Forgetpass(request):
+
+    userp = True
+
     if request.method == 'POST':
         user = request.POST.get('username')
 
@@ -309,12 +360,21 @@ def Forgetpass(request):
         messages.info(request, 'Check your Email Inbox')
         return redirect('forgetpass')
 
-    return render(request, 'registration/forgetpass.html')
+    return render(request, 'registration/forgetpass.html', {'userp':userp})
 
 def AboutUs(request):
-    return render(request, 'about.html', {})
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
+
+    return render(request, 'about.html', {'userp':userp})
 
 def ContactUs(request):
+
+    userp = True
+
     if request.method == "POST":
         name = request.POST.get('name')
         email = request.POST.get('email')
@@ -325,15 +385,28 @@ def ContactUs(request):
         messages.success(request, "Your ticket created successfully we will reach you as soon as possible")
         return redirect('contactus')
 
-    return render(request, 'contact.html', {})
+    return render(request, 'contact.html', {'userp':userp})
 
 def Donate(request):
-    return render(request, 'donate.html', {})
+
+    userp = True
+
+    return render(request, 'donate.html', {'userp':userp})
 
 def Bot(request):
-    return render(request, 'selfbot.html', {})
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
+
+    return render(request, 'selfbot.html', {'userp':userp})
 
 def TypeBot(request, pk):
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
     try:
         user_obj = request.user.username
         bbot.delay(pk, user_obj)
@@ -343,10 +416,25 @@ def TypeBot(request, pk):
         print(e)
 
 def Pmembership(request):
-    return render(request, 'pricing.html', {})
+
+    userp = True
+
+    return render(request, 'pricing.html', {'userp':userp})
 
 def AuthHelp(request):
-    return render(request, 'auth_help.html', {})
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
+
+    return render(request, 'auth_help.html', {'userp':userp})
 
 def Error_404(request, exception):
-    return render(request, '404.html')
+
+    if request.user.is_authenticated:
+        userp = Pre_User.objects.filter(U_User=request.user).exists
+    else:
+        userp = False
+
+    return render(request, '404.html', {'userp':userp})

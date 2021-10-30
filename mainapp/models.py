@@ -14,7 +14,6 @@ class UserAuthentication(models.Model):
     D_ChID = models.CharField(max_length=100)
     U_Type = models.CharField(max_length=7)
     N_Loss = models.CharField(max_length=7)
-    U_PreM = models.BooleanField(null=False, default=False)
     U_Agen = models.CharField(max_length=250, null=True)
     B_Numb = models.PositiveIntegerField(null=True)
 
@@ -25,10 +24,21 @@ class ForgetPass(models.Model):
     U_User = models.OneToOneField(
         User,
         on_delete=models.CASCADE
-        )
+    )
 
     F_P_TO = models.CharField(max_length=100)
     F_Date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.U_User.username
+
+
+class Pre_User(models.Model):
+    U_User = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+    P_User = models.CharField(max_length=9)
 
     def __str__(self):
         return self.U_User.username
