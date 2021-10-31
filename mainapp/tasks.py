@@ -12,15 +12,17 @@ def Send_Message(Message, tokan, ch_id, usera, bnumb, user, email, passw):
     if usera is not None and bnumb is not None:
         sec = random.choice([3, 4, 5, 6])
         time.sleep(sec)
-        if email is not None and passw is not None:
-            discum.Client(email=email, password=passw, user_agent=usera, build_num=bnumb).sendMessage(ch_id, Message)
-        else:
+        if tokan is not None and tokan != '' and tokan != 'None':
             discum.Client(token=tokan, user_agent=usera, build_num=bnumb).sendMessage(ch_id, Message)
-    else:
-        if email is not None and passw is not None:
-            bot = discum.Client(email=email, password=passw)
         else:
+            discum.Client(email=email, password=passw, user_agent=usera, build_num=bnumb).sendMessage(ch_id, Message)
+            
+    else:
+        if tokan is not None and tokan != '' and tokan != 'None':
             bot = discum.Client(token=tokan)
+        else:
+            bot = discum.Client(email=email, password=passw)
+            
         bnumb = bot.getBuildNumber()
         usera = bot._Client__user_agent
         user_obj = User.objects.get(username=user)
