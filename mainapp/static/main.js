@@ -4441,8 +4441,12 @@ function timer(clickedbutton) {
 
     if (clickedbutton == "Dank_Memer") {
         var para = "timer"
-    } else {
+    } else if (clickedbutton == "Taco") {
         var para = "timer1"
+    } else if (clickedbutton == "VirFish"){
+        var para = "timer2"
+    } else if (clickedbutton == "Bcoins"){
+        var para = "timer3"
     }
 
     var today = new Date();

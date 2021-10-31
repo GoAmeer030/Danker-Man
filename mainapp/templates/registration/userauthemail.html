@@ -12,7 +12,7 @@
 <div class="wrapper fadeInDown">
   <div id="formContent">
 
-    <h2><a class="inactive underlineHover" href="{% url 'UserAuthForm' %}"> With Auth_Key </a></h2>
+    <h2><a class="inactive underlineHover" href="{% url 'UserAuthForm' %}"> With Auth_Key (Recommended) </a></h2>
     <h2 class="active"> With Email_Password </h2>
 
     <form method="post">
@@ -28,6 +28,7 @@
         <option type="text" value="Noloss">No Loss</option>
         <option type="text" value="Normal">Normal</option>
       </select>
+      <p class="s_p fadeIn third">This Method may not work sometimes So use Token method</p>
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
 

@@ -61,7 +61,7 @@ def CommandSelection(Messages, user):
             item = random.choice(Messages)
 
 
-            if item[0] in ['pls se', 'pls bet', '!flip heads', '!flip tails', '!slots']:
+            if item[0] in ['pls se', 'pls bet', '!flip heads', '!flip tails', '!slots', 'bg']:
 
                 item_1 = random.randrange(500, 3000)
 
@@ -103,8 +103,19 @@ def bbot(self, bot, user):
                       ['pls se', 10], ['pls beg', 40], ['pls dep all', 300],
                       ['pls bal', 120], ['pls level', 3600], ['pls bet', 8],
                       ]
+
+    elif bot == 'Taco':
+        Messages = [['!tips', 300], ['!clean', 7200], ['!work', 600], 
+                      ['!flip heads', 60], ['!flip tails', 60], ['!scratch', 30], 
+                      ['!slots', 60], ['!roll', 60]]
+
+    elif bot == 'VirFish':
+        Messages = [['%f', 1], ['%s all', 3600]]
+
     else:
-        Messages = [['!tips', 300], ['!clean', 7200], ['!work', 600], ['!flip heads', 60], ['!flip tails', 60], ['!scratch', 30], ['!slots', 60], ['!roll', 60]]
+        Messages = [['bb', 600], ['bw', 30], ['be', 5], 
+                      ['bi', 1200], ['bdep all', 6000], ['brankup', 12000], 
+                      ['bsa force', 12000], ['bh', 5], ['bg', 360]]
 
     main = billiard.Process(target=CommandSelection, args = (Messages, user))
 
