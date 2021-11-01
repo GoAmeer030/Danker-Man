@@ -4,7 +4,7 @@ from django.conf import settings
 
 def mail_for_pass(email, token):
 	subject = "Reset Password"
-	message = f'Click the link to change your password http://127.0.0.1:8000/reset_pass/{token}/'
+	message = f'Click the link to change your password https://http://dankerman.herokuapp.com//reset_pass/{token}/'
 	email_from = settings.EMAIL_HOST_USER
 	send_mail(subject, message, email_from, [email])
 	return 1

@@ -123,6 +123,7 @@ def Login(request):
 
             if user_obj is None:
                 messages.warning(request, 'Worng Password Try Again')
+                return redirect('login')
 
             login(request, user_obj)
             messages.success(request, f' welcome {username} !!')
