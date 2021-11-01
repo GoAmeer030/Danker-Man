@@ -121,7 +121,7 @@ def bbot(self, bot, user):
 
     main.start()
 
-    time.sleep(60)
+    time.sleep(6000)
 
     main.terminate()
 
