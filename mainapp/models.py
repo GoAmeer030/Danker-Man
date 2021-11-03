@@ -42,3 +42,16 @@ class Pre_User(models.Model):
 
     def __str__(self):
         return self.U_User.username
+
+class VerifyMe(models.Model):
+    U_User = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+
+    V_B_TO = models.CharField(max_length=100)
+    V_A_TO = models.CharField(max_length=100)
+    F_Date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.U_User.username

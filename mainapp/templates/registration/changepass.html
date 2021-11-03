@@ -19,7 +19,8 @@
     <form method="post">
       {% csrf_token %}
       <input type="password" id="new_password" class="fadeIn second" name="new_password" placeholder="New Password">
-      <input type="password" id="confirm_password" class="fadeIn second" name="confirm_password" placeholder="Confirm Password">
+      <input type="password" id="confirm_password" class="fadeIn second" name="confirm_password"
+        placeholder="Confirm Password">
       <input type="hidden" id="username" name="username" value="{{username}}">
       <input type="submit" class="fadeIn fourth" value="Update">
     </form>

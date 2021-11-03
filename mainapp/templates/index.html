@@ -5,20 +5,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     {% load static %}
 
     {% block title1 %}
     <title>Danker Man</title>
     {% endblock title1 %}
-    
-    <style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');</style>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+    </style>
 
     <link rel="stylesheet" href="{% static 'main.css' %}">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.2/js/toastr.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"  type='text/css'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" rel="stylesheet"
+        type='text/css'>
 
     <link rel="favicon" sizes="57x57" href="{% static 'assets/favicon.ico' %}">
 
@@ -30,10 +33,15 @@
 
 <body>
 
-    {% if not userp  %}
+    {% if not userp %}
     <script src="{% static 'ad.js' %}"></script>
     <script async="async" data-cfasync="false" src="//upgulpinon.com/1?z=4624779"></script>
-    <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://iclickcdn.com/tag.min.js',4624784,document.body||document.documentElement)</script>
+    <script>
+        (function (s, u, z, p) {
+            s.src = u, s.setAttribute('data-zone', z), p.appendChild(s);
+        })(document.createElement('script'), 'https://iclickcdn.com/tag.min.js', 4624784, document.body || document
+            .documentElement)
+    </script>
     <script type="text/javascript" src="//cdrvrs.com/4/4624754"></script>
     {% endif %}
 
@@ -266,14 +274,16 @@
                     <div class="col-md-4">
                         <h4>Do you like ? Share this !</h4>
                         <p>
-                            <a href="https://facebook.com/" class="social-round-icon white-round-icon fa-icon" target="_blank" rel="noopener noreferrer" title="">
+                            <a href="https://facebook.com/" class="social-round-icon white-round-icon fa-icon"
+                                target="_blank" rel="noopener noreferrer" title="">
                                 <i class="fa fa-facebook" aria-hidden="true"></i>
                             </a>
-                            <a href="https://twitter.com/" class="social-round-icon white-round-icon fa-icon" target="_blank" rel="noopener noreferrer" title="">
+                            <a href="https://twitter.com/" class="social-round-icon white-round-icon fa-icon"
+                                target="_blank" rel="noopener noreferrer" title="">
                                 <i class="fa fa-twitter" aria-hidden="true"></i>
                             </a>
-                            <a href="https://www.linkedin.com/" class="social-round-icon white-round-icon fa-icon" target="_blank" rel="noopener noreferrer"
-                                title="">
+                            <a href="https://www.linkedin.com/" class="social-round-icon white-round-icon fa-icon"
+                                target="_blank" rel="noopener noreferrer" title="">
                                 <i class="fa fa-linkedin" aria-hidden="true"></i>
                             </a>
                         </p>
@@ -312,7 +322,11 @@
                 toastr.options.showMethod = "fadeIn";
                 toastr.options.hideMethod = "fadeOut";
 
-                toastr.{{message.tags}}("{{message}}");
+                toastr. {
+                    {
+                        message.tags
+                    }
+                }("{{message}}");
 
             });
         </script>

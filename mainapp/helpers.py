@@ -9,8 +9,8 @@ def mail_for_pass(email, token):
 	send_mail(subject, message, email_from, [email])
 	return 1
 
-def welcome_mail(username, email, htmly):
-	d = { 'username': username }
+def welcome_mail(username, email, htmly, token):
+	d = { 'username': username, 'token': token }
 	subject = 'Welcome'
 	from_email = 'dankerman.cservice@gmail.com'
 	to = email
@@ -22,5 +22,5 @@ def welcome_mail(username, email, htmly):
 def contact_us_mail(name, email, subject, message):
 	message = f'{name} {email} {message}'
 	email_from = settings.EMAIL_HOST_USER
-	send_mail(subject, message, email_from, ['dankerman.cservice@gmail.com'])
+	send_mail(subject, message, email_from, [email_from])
 	return 1

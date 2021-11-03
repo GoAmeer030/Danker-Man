@@ -23,6 +23,7 @@ urlpatterns = [
     path('edit_profile/', views.EditProfile, name='edit_profile'),
     path('forget_pass/', views.Forgetpass, name='forgetpass'),
     path('reset_pass/<token>/', views.ChangePass, name='changepass'),
+    path('verify_me/<token>/', views.VerifyEmail, name='verifyemail'),
 
 
     path('aboutus/', views.AboutUs, name='aboutus'),

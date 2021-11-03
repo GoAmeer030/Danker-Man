@@ -6,7 +6,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.template.loader import get_template
 from .tasks import bbot
-from .models import UserAuthentication, User, ForgetPass, Pre_User
+from .models import UserAuthentication, User, ForgetPass, Pre_User, VerifyMe
 from .helpers import mail_for_pass, welcome_mail, contact_us_mail
 import uuid
 
@@ -15,7 +15,7 @@ def Home(request):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
 
     return render(request, 'index.html', {'userp':userp})
 
@@ -24,7 +24,7 @@ def tac(request):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
 
     return render(request, 'tac.html', {'userp':userp})
 
@@ -33,7 +33,7 @@ def pp(request):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
         
     return render(request, 'pp.html', {'userp':userp})
 
@@ -42,7 +42,7 @@ def dis(request):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
 
     return render(request, 'dis.html', {'userp':userp})
 
@@ -89,10 +89,20 @@ def register(request):
             user_obj = User(username=username, email=email)
             user_obj.set_password(password)
             user_obj.save()
-            htmly = get_template('registration/email.html')
 
-            welcome_mail(username, email, htmly)
-            messages.success(request, f'Your account has been created ! You are now able to log in')
+            htmly = get_template('registration/email.html')
+            user_obj = User.objects.get(username=username)
+            token = str(uuid.uuid4())
+
+            forgetpass_obj = VerifyMe.objects.update_or_create(
+                U_User = user_obj,
+                defaults = {
+                    "V_B_TO": token,
+                }
+            )
+
+            welcome_mail(username, email, htmly, token)
+            messages.success(request, f'Your account has been created ! Check your mail to verify !!')
 
             return redirect('login')
 
@@ -106,6 +116,9 @@ def Login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
+        user = User.objects.filter(username=username).first()
+        user_obj = VerifyMe.objects.filter(U_User=user).first()
+
         if username == '':
             messages.error(request, 'You must enter Username')
             return redirect('login')
@@ -116,6 +129,10 @@ def Login(request):
 
         elif User.objects.filter(username=username).exists() == False:
             messages.warning(request, 'account does not exit plz sign in')
+            return redirect('login')
+
+        elif user_obj.V_B_TO != user_obj.V_A_TO:
+            messages.warning(request, 'First Verify your account to Login')
             return redirect('login')
 
         elif username != '' and password != '':
@@ -248,13 +265,12 @@ def EditProfile(request):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
 
     if request.method == 'POST':
 
         usern = request.POST.get('username')     
         email = request.POST.get('id_email')
-        auth = request.POST.get('D_Auth')
         chid = request.POST.get('D_ChID')
         dnme = request.POST.get('Email')
         dpas = request.POST.get('password')
@@ -271,11 +287,6 @@ def EditProfile(request):
                 messages.warning(request, 'Email is already Taken')
                 return redirect('edit_profile')
 
-        elif userauth.D_Auth != auth:
-            if UserAuthentication.objects.filter(D_Auth=auth).exists():
-                messages.warning(request, 'Authentication key in Use')
-                return redirect('edit_profile')
-
         elif userauth.E_Mail != dnme:
             if UserAuthentication.objects.filter(E_Mail=dnme).exists():
                 messages.warning(request, 'Email ID is already in use')
@@ -285,7 +296,6 @@ def EditProfile(request):
             userauth_obj = UserAuthentication.objects.update_or_create(
                 U_User = user,
                 defaults = {
-                    "D_Auth": auth,
                     "D_ChID": chid,
                     "U_Type": utyp,
                     "N_Loss": loss,
@@ -363,12 +373,26 @@ def Forgetpass(request):
 
     return render(request, 'registration/forgetpass.html', {'userp':userp})
 
+def VerifyEmail(request, token):
+
+    user_obj = VerifyMe.objects.filter(V_B_TO=token).first()
+
+    user_ver = VerifyMe.objects.update_or_create(
+        U_User = user_obj.U_User,
+        defaults = {
+            "V_A_TO": token,
+        }
+    )
+
+    messages.success(request, 'Check your Email Inbox')
+    return redirect('login')
+
 def AboutUs(request):
 
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
 
     return render(request, 'about.html', {'userp':userp})
 
@@ -399,7 +423,7 @@ def Bot(request):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
 
     return render(request, 'selfbot.html', {'userp':userp})
 
@@ -407,7 +431,7 @@ def TypeBot(request, pk):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
     try:
         user_obj = request.user.username
         bbot.delay(pk, user_obj)
@@ -427,7 +451,7 @@ def AuthHelp(request):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
 
     return render(request, 'auth_help.html', {'userp':userp})
 
@@ -436,6 +460,6 @@ def Error_404(request, exception):
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
-        userp = False
+        userp = True
 
     return render(request, '404.html', {'userp':userp})
