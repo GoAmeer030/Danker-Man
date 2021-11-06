@@ -32,7 +32,7 @@ urlpatterns = [
 
 
     path('bot/', views.Bot, name='bot'),
-    path('bot/<str:pk>', views.TypeBot, name='typebot'),
+    path('bot/<str:pk>/<pri_key>/', views.TypeBot, name='typebot'),
     path('pmembership/', views.Pmembership, name='pmembership'),
 
 

@@ -7,8 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.template.loader import get_template
 from .tasks import bbot
 from .models import UserAuthentication, User, ForgetPass, Pre_User, VerifyMe
-from .helpers import mail_for_pass, welcome_mail, contact_us_mail
+from .helpers import mail_for_pass, welcome_mail, contact_us_mail, key_mail
 import uuid
+import rsa
+
+def Send_Messages(request, tag, message):
+    messages.tag(request, message)
 
 def Home(request):
 
@@ -169,6 +173,11 @@ def UserAuthform(request):
         utyp = request.POST.get('U_Type')
         loss = request.POST.get('N_Loss')
 
+        user_obj = User.objects.get(username=user)
+
+        pub_key, pri_key = rsa.newkeys(1024)
+        e_auth = rsa.encrypt(auth.encode(), pub_key)
+
         if auth == '':
             messages.error(request, 'Authentication Key Must be Entered')
             return redirect('UserAuthForm')
@@ -177,7 +186,7 @@ def UserAuthform(request):
             messages.error(request, 'Channel ID Must be Entered')
             return redirect('UserAuthForm')
 
-        elif UserAuthentication.objects.filter(D_Auth=auth).exists():
+        elif UserAuthentication.objects.filter(D_Auth=e_auth).exists():
             messages.warning(request, 'Authentication key in Use')
             return redirect('UserAuthForm')
 
@@ -186,12 +195,13 @@ def UserAuthform(request):
             return redirect('UserAuthForm')
 
         else:
-            user_obj = User.objects.get(username=user)
+
+            key_mail(pri_key, request.user.email)
 
             userauth_obj = UserAuthentication.objects.update_or_create(
                 U_User = user_obj,
                 defaults = {
-                    "D_Auth": auth,
+                    "D_Auth": e_auth,
                     "D_ChID": chid,
                     "U_Type": utyp,
                     "N_Loss": loss,
@@ -218,6 +228,12 @@ def UserAuthemail(request):
         utyp = request.POST.get('U_Type')
         loss = request.POST.get('N_Loss')
 
+        user_obj = User.objects.get(username=user)
+
+        pub_key, pri_key = rsa.newkeys(1024)
+        e_email = rsa.encrypt(email.encode(), pub_key)
+        e_passw = rsa.encrypt(passw.encode(), pub_key)
+
         if email == '':
             messages.error(request, 'Email Must be Entered')
             return redirect('UserAuthEmail')
@@ -230,7 +246,7 @@ def UserAuthemail(request):
             messages.error(request, 'Channel ID Must be Entered')
             return redirect('UserAuthEmail')
 
-        elif UserAuthentication.objects.filter(E_Mail=email).exists():
+        elif UserAuthentication.objects.filter(E_Mail=e_email).exists():
             messages.warning(request, 'Email is already in use')
             return redirect('UserAuthEmail')
 
@@ -239,13 +255,14 @@ def UserAuthemail(request):
             return redirect('UserAuthEmail')
 
         else:
-            user_obj = User.objects.get(username=user)
+            
+            key_mail(pri_key, request.user.email)
 
             userauth_obj = UserAuthentication.objects.update_or_create(
                 U_User = user_obj,
                 defaults = {
-                    "E_Mail": email,
-                    "P_Word": passw,
+                    "E_Mail": e_email,
+                    "P_Word": e_passw,
                     "D_ChID": chid,
                     "U_Type": utyp,
                     "N_Loss": loss,
@@ -427,14 +444,15 @@ def Bot(request):
 
     return render(request, 'selfbot.html', {'userp':userp})
 
-def TypeBot(request, pk):
+def TypeBot(request, pk, pri_key):
+
     if request.user.is_authenticated:
         userp = Pre_User.objects.filter(U_User=request.user).exists
     else:
         userp = True
     try:
         user_obj = request.user.username
-        bbot.delay(pk, user_obj)
+        bbot.delay(pk, user_obj, pri_key)
         messages.success(request, f"Your {pk} Bot Starts Come Again After 2 Hours")
         return redirect('bot')
     except ValueError as e:

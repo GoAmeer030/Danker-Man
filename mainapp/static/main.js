@@ -4437,7 +4437,9 @@ String.prototype.format = String.prototype.format ||
 
 function timer(clickedbutton) {
 
-    location.href = '{0}'.format(clickedbutton);
+    var pri_key = document.getElementById('pri_key').value
+
+    location.href = '{0}/{1}/'.format(clickedbutton, pri_key);
 
     if (clickedbutton == "Dank_Memer") {
         var para = "timer"

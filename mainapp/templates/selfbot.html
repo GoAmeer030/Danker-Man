@@ -8,21 +8,19 @@
    <div class="boxed">
       <img src="{% static 'assets/Dankmemer_logo.webp' %}" width="275" height="250" />
       <p id="timer" class="s_p">Dank Memer</p>
-      <button id="Dank_Memer" onclick="timer(this.id)" class="s_img">
-         START!
-      </button>
+      <button class="btn" id="Dank_Memer" onclick="openForm(this.id)" class="s_img">START!</button>
    </div>
 
    <div class="boxed">
       <img src="{% static 'assets/Toco_logo.webp' %}" width="275" height="250" />
       <p id="timer1" class="s_p">Taco</p>
-      <button id="Taco" onclick="timer(this.id)" class="s_img">START!</button>
+      <button class="btn" id="Taco" onclick="openForm(this.id)" class="s_img">START!</button>
    </div>
 
    <div class="boxed">
       <img src="{% static 'assets/VirFish_logo.webp' %}" width="275" height="250" />
       <p id="timer2" class="s_p">Virtual Fisher</p>
-      <button id="VirFish" onclick="timer(this.id)" class="s_img">START!</button>
+      <button class="btn" id="VirFish" onclick="openForm(this.id)" class="s_img">START!</button>
    </div>
 </div>
 
@@ -31,10 +29,31 @@
    <div class="boxed">
       <img src="{% static 'assets/Bcoins_logo.webp' %}" width="275" height="250" />
       <p id="timer3" class="s_p">Bcoins</p>
-      <button id="Bcoins" onclick="timer(this.id)" class="s_img">START!</button>
+      <button class="btn" id="Bcoins" onclick="openForm(this.id)" class="s_img">START!</button>
    </div>
 
 </div>
+
+<div class="form-popup fadeInDown formContent" id="myForm">
+  <form class="form-container">
+    <input type="text" id="pri_key" class="fadeIn first" name="pri_key" placeholder="Private Key" required>
+    <button type="button" id="pri_key_btn" class="btn fadeInDown second" name="pri_key_btn" onclick="timer(this.id)">Login</button>
+    <button type="button" class="btn cancel fadeInDown third" onclick="closeForm()">Close</button>
+  </form>
+</div>
+
+<script>
+function openForm(id_from) {
+  document.getElementById("myForm").style.display = "block";
+  document.getElementById("pri_key_btn").id = id_from;
+  console.log(id_from);
+}
+
+function closeForm() {
+  document.getElementById("myForm").style.display = "none";
+}
+</script>
+
 
 <p>Use our <a href="https://discord.gg/5MTG9M6M8R">Discord </a></p>
 

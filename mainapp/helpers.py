@@ -1,4 +1,4 @@
-from django.core.mail import send_mail
+from django.core.mail import message, send_mail
 from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 
@@ -23,4 +23,11 @@ def contact_us_mail(name, email, subject, message):
 	message = f'{name} {email} {message}'
 	email_from = settings.EMAIL_HOST_USER
 	send_mail(subject, message, email_from, [email_from])
+	return 1
+
+def key_mail(pri_key, email):
+	subject = 'Private Key'
+	message = f'{pri_key} {email}'
+	email_from = settings.EMAIL_HOST_USER
+	send_mail(subject, message, email_from, [email])
 	return 1
