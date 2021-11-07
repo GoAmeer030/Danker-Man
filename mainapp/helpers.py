@@ -27,7 +27,7 @@ def contact_us_mail(name, email, subject, message):
 
 def key_mail(pri_key, email):
 	subject = 'Private Key'
-	message = f'{pri_key} {email}'
+	message = f'{pri_key} {email} copy the numbers inside PrivateKey()'
 	email_from = settings.EMAIL_HOST_USER
 	send_mail(subject, message, email_from, [email])
 	return 1

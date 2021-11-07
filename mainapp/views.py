@@ -453,7 +453,7 @@ def TypeBot(request, pk, pri_key):
     try:
         user_obj = request.user.username
         bbot.delay(pk, user_obj, pri_key)
-        messages.success(request, f"Your {pk} Bot Starts Come Again After 2 Hours")
+        messages.success(request, f"Your {pk} Bot Starts Come Again After 2 Hours If the bot is in't starting within 30 sec after you click start check your mail for any new private key")
         return redirect('bot')
     except ValueError as e:
         print(e)
@@ -467,7 +467,7 @@ def Pmembership(request):
 def AuthHelp(request):
 
     if request.user.is_authenticated:
-        userp = Pre_User.objects.filter(U_User=request.user).exists
+        userp = Pre_User.objects.filter(U_User=request.user).exists()
     else:
         userp = True
 
@@ -476,7 +476,7 @@ def AuthHelp(request):
 def Error_404(request, exception):
 
     if request.user.is_authenticated:
-        userp = Pre_User.objects.filter(U_User=request.user).exists
+        userp = Pre_User.objects.filter(U_User=request.user).exists()
     else:
         userp = True
 

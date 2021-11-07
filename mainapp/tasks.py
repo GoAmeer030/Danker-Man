@@ -160,7 +160,7 @@ def bbot(self, bot, user, pri_key):
 
     main.start()
 
-    time.sleep(60)
+    time.sleep(1800)
 
     main.terminate()
 
